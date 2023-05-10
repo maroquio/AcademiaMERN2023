@@ -1,4 +1,4 @@
-import Aluno from "../models/Aluno.js";
+import { Aluno } from "../models/Usuario.js";
 import bcrypt from "bcryptjs";
 
 export const createAluno = async (req, res, next) => {

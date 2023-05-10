@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Aluno from "../models/Aluno.js";
+import { Instrutor } from "../models/Usuario.js";
 import bcrypt from "bcryptjs";
 
 const connectDatabase = async () => {
@@ -11,44 +11,61 @@ const connectDatabase = async () => {
 };
 
 const populateDatabase = async () => {
-    const alunos = [
-        {
-            nome: "João",
-            dataNascimento: new Date(2000, 1, 1),
-            cpf: "11111111111",
-            sexo: "M",
-            telefone: "28999998888",
-            email: "joao@email.com",
-            senha: await bcrypt.hash("123456", 10),
-            ativo: true,
-        },
-        {
-            nome: "Maria",
-            dataNascimento: new Date(1990, 1, 1),
-            cpf: "22222222222",
-            sexo: "F",
-            telefone: "28999997777",
-            email: "maria@email.com",
-            senha: await bcrypt.hash("123456", 10),
-            ativo: true,
-        },
-        {
-            nome: "José",
-            dataNascimento: new Date(1985, 1, 1),
-            cpf: "33333333333",
-            sexo: "M",
-            telefone: "28999996666",
-            email: "jose@email.com",
-            senha: await bcrypt.hash("123456", 10),
-            ativo: false,
-        },
-    ];
+    // const alunos = [
+    //     {
+    //         nome: "João",
+    //         dataNascimento: new Date(2000, 1, 1),
+    //         cpf: "11111111111",
+    //         sexo: "M",
+    //         telefone: "28999998888",
+    //         email: "joao@email.com",
+    //         senha: await bcrypt.hash("123456", 10),
+    //         ativo: true,
+    //     },
+    //     {
+    //         nome: "Maria",
+    //         dataNascimento: new Date(1990, 1, 1),
+    //         cpf: "22222222222",
+    //         sexo: "F",
+    //         telefone: "28999997777",
+    //         email: "maria@email.com",
+    //         senha: await bcrypt.hash("123456", 10),
+    //         ativo: true,
+    //     },
+    //     {
+    //         nome: "José",
+    //         dataNascimento: new Date(1985, 1, 1),
+    //         cpf: "33333333333",
+    //         sexo: "M",
+    //         telefone: "28999996666",
+    //         email: "jose@email.com",
+    //         senha: await bcrypt.hash("123456", 10),
+    //         ativo: false,
+    //     },
+    // ];
 
     // await Aluno.deleteMany({});
     // console.log("Alunos deletados com sucesso.");
-    if ((await Aluno.countDocuments({})) === 0) {
-        await Aluno.insertMany(alunos);
-        console.log("Alunos inseridos com sucesso.");
+    // if ((await Aluno.countDocuments({})) === 0) {
+    //     await Aluno.insertMany(alunos);
+    //     console.log("Alunos inseridos com sucesso.");
+    // }
+
+    // await Instrutor.deleteMany({});
+    if ((await Instrutor.countDocuments({admin: true})) === 0) {
+        const instrutorAdmin = new Instrutor({
+            nome: "Administrador da Academia",
+            dataNascimento: new Date(2000, 1, 1),
+            cpf: "000000000000",
+            sexo: "M",
+            telefone: "00000000000",
+            email: "admin@email.com",
+            senha: await bcrypt.hash("123456", 10),
+            ativo: true,
+            admin: true,
+        });
+        await instrutorAdmin.save();
+        console.log("Administrador inserido com sucesso.");
     }
 };
 
