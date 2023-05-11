@@ -13,7 +13,7 @@ const InformModal = ({ info, action }) => {
                         </h5>
                         <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                    <div className="modal-body">{purify.sanitize(parse(info))}</div>
+                    <div className="modal-body">{parse(purify.sanitize(info))}</div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={action}>
                             Ok

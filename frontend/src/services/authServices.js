@@ -1,5 +1,6 @@
 //baseado em https://www.bezkoder.com/react-jwt-auth/
 import axios from "axios";
+import jwt from "jwt-decode";
 
 const API_URL = "http://localhost:8080/api/auth/";
 
@@ -33,7 +34,7 @@ export const getUser = () => {
 };
 
 export const isAuthenticated = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = getUser();
     if (user && user.accessToken) {
         return true;
     } else {
@@ -41,8 +42,18 @@ export const isAuthenticated = () => {
     }
 };
 
+export const isAdministrator = () => {
+    const user = getUser();
+    if (user && user.accessToken) {
+        const decoded = jwt(user.accessToken);
+        return (decoded.admin && (decoded.admin === true) && (decoded.perfil === "Instrutor"));
+    } else {
+        return false;
+    }
+};
+
 export const authHeader = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = getUser();
     if (user && user.accessToken) {
         return { "x-access-token": user.accessToken };
     } else {

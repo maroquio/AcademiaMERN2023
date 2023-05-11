@@ -16,7 +16,7 @@ export const login = async (req, res, next) => {
         }
         const { senha, ...dados } = usuario._doc;
         let expiresTime = req.body.lembrar ? "7d" : "1h";
-        const accessToken = jwt.sign({ id: usuario._id, admin: usuario.admin, perfil: usuario.tipo }, process.env.JWT_SECRET, { expiresIn: expiresTime });
+        const accessToken = jwt.sign({ id: usuario._id, admin: usuario.admin && usuario.admin === true ? true : false, perfil: usuario.tipo }, process.env.JWT_SECRET, { expiresIn: expiresTime });
         dados.accessToken = accessToken;
         res.cookie("accessToken", accessToken, { httpOnly: true }).status(200).json(dados);
     } catch (error) {
