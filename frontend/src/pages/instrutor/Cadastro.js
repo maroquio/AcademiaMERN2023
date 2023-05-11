@@ -29,7 +29,7 @@ const Cadastro = () => {
             .oneOf([yup.ref("senha"), null], "Confirmação de Senha e Senha devem ser iguais.")
             .required("Confirmação de Senha é obrigatória."),
         admin: yup.boolean().required("Admin é obrigatório."),
-        ativo: yup.boolean().required("Situação é obrigatória."),
+        ativo: yup.boolean().required("Situação é obrigatória."), 
     });
 
     function handleChange(event) {
