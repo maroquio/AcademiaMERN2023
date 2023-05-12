@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import { isAdministrator } from "../services/authServices";
+import { isAdministrador, isInstrutor } from "../services/authServices";
 
 const Navbar = () => {
     return (
@@ -18,10 +18,12 @@ const Navbar = () => {
                             <NavLink to="/" className="nav-link">
                                 Principal
                             </NavLink>
+                            {(isAdministrador() || isInstrutor) && (
                             <NavLink to="/alunos" className="nav-link">
                                 Alunos
                             </NavLink>
-                            {isAdministrator() && (
+                            )}
+                            {isAdministrador() && (
                                 <NavLink to="/instrutores" className="nav-link">
                                     Instrutores
                                 </NavLink>

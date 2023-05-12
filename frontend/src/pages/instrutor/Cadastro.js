@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import axios from "axios";
 import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min.js";
 import FormInstrutor from "../../components/FormInstrutor";
 import InformModal from "../../components/InformModal";
-import { authHeader } from "../../services/authServices";
+import { authHeader, isAdministrador } from "../../services/authServices";
 import handleChange from "../../utils/handleChange";
 
 const Cadastro = () => {
@@ -94,22 +94,26 @@ const Cadastro = () => {
 
     return (
         <>
-            <div className="d-flex justify-content-between align-items-center">
-                <h1>Novo Instrutor</h1>
-            </div>
-            <hr />
-            <form onSubmit={handleSubmit} noValidate autoComplete="off">
-                <FormInstrutor handleChange={localHandleChange} inputs={inputs} errors={errors} isNew={true} />
-                <div className="mt-3">
-                    <Link to="/instrutores" className="btn btn-secondary me-1">
-                        Cancelar
-                    </Link>
-                    <button type="submit" className="btn btn-primary">
-                        Salvar
-                    </button>
+            {!isAdministrador() ? (<Navigate to="/login" />) : (
+            <>
+                <div className="d-flex justify-content-between align-items-center">
+                    <h1>Novo Instrutor</h1>
                 </div>
-            </form>
-            <InformModal info="Instrutor cadastrado com sucesso!" action={closeModalAndRedirect} />
+                <hr />
+                <form onSubmit={handleSubmit} noValidate autoComplete="off">
+                    <FormInstrutor handleChange={localHandleChange} inputs={inputs} errors={errors} isNew={true} />
+                    <div className="mt-3">
+                        <Link to="/instrutores" className="btn btn-secondary me-1">
+                            Cancelar
+                        </Link>
+                        <button type="submit" className="btn btn-primary">
+                            Salvar
+                        </button>
+                    </div>
+                </form>
+                <InformModal info="Instrutor cadastrado com sucesso!" action={closeModalAndRedirect} />
+            </>
+            )}
         </>
     );
 };

@@ -8,38 +8,67 @@ export const verificarToken = (req, res, next) => {
         if (!accessToken) { 
             return next(createError(401, "Você não está autenticado.")); 
         }
-        const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
-        req.aluno = decoded;
+        const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);        
+        req.usuario = decoded;
+        console.log(req.usuario);
         next();
     } catch (error) {
         next(error);
     }
 }
 
-export const verificarUsuario = (req, res, next) => {
+export const verificarAutenticado = (req, res, next) => {
     verificarToken(req, res, () => {
-        if (!req.aluno) {
-            return next(createError(401, "Você não está autenticado como usuário."));
+        if (!req.usuario) {
+            return next(createError(401, "Usuário não autenticado."));
         }
-        if (req.aluno.id === req.params.id || req.aluno.admin) {
+        if (req.usuario.id === req.params.id || req.usuario.admin) {
             next();
         }
         else {
-            return next(createError(403, "Você não tem permissão para acessar este recurso."));
+            return next(createError(403, "Usuário não tem permissão para acessar este recurso."));
         }
     });
 }
 
-export const verificarAdmin = (req, res, next) => {
-    verificarToken(req, res, () => {        
-        if (!req.aluno) {
-            return next(createError(401, "Você não está autenticado como administrador."));
+export const verificarAluno = (req, res, next) => {
+    verificarToken(req, res, () => {
+        if (!req.usuario) {
+            return next(createError(401, "Usuário não autenticado."));
         }
-        if (req.aluno.admin) {
+        if ((req.usuario.perfil === "Aluno" && req.usuario.id === req.params.id) || req.usuario.admin || req.usuario.perfil === "Instrutor") {
             next();
         }
         else {
-            return next(createError(403, "Você não tem permissão para acessar este recurso."));
+            return next(createError(403, "Usuário não tem permissão para acessar este recurso."));
+        }
+    });
+}
+
+export const verificarInstrutor = (req, res, next) => {
+    verificarToken(req, res, () => {        
+        if (!req.usuario) {
+            return next(createError(401, "Usuário não autenticado."));
+        }
+        if (req.usuario.perfil === "Instrutor") {
+            next();
+        }
+        else {
+            return next(createError(403, "Usuário não tem permissão para acessar este recurso."));
+        }
+    });
+}
+
+export const verificarAdministrador = (req, res, next) => {
+    verificarToken(req, res, () => {        
+        if (!req.usuario) {
+            return next(createError(401, "Usuário não autenticado."));
+        }
+        if (req.usuario.perfil === "Instrutor" && req.usuario.admin) {
+            next();
+        }
+        else {
+            return next(createError(403, "Usuário não tem permissão para acessar este recurso."));
         }
     });
 }

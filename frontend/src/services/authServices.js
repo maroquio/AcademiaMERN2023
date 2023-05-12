@@ -42,7 +42,27 @@ export const isAuthenticated = () => {
     }
 };
 
-export const isAdministrator = () => {
+export const isAluno = () => {
+    const user = getUser();
+    if (user && user.accessToken) {
+        const decoded = jwt(user.accessToken);
+        return (decoded.perfil === "Aluno");
+    } else {
+        return false;
+    }
+};
+
+export const isInstrutor = () => {
+    const user = getUser();
+    if (user && user.accessToken) {
+        const decoded = jwt(user.accessToken);
+        return (decoded.perfil === "Instrutor");
+    } else {
+        return false;
+    }
+};
+
+export const isAdministrador = () => {
     const user = getUser();
     if (user && user.accessToken) {
         const decoded = jwt(user.accessToken);

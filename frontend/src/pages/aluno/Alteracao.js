@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
 import axios from "axios";
 import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min.js";
 import FormAluno from "../../components/FormAluno";
 import InformModal from "../../components/InformModal";
-import { authHeader } from "../../services/authServices";
+import { authHeader, isAdministrador, isInstrutor } from "../../services/authServices";
 
 const Alteracao = () => {
     const [inputs, setInputs] = useState({});
@@ -120,22 +120,26 @@ const Alteracao = () => {
 
     return (
         <>
-            <div className="d-flex justify-content-between align-items-center">
-                <h1>Alteração de Aluno</h1>
-            </div>
-            <hr />
-            <form onSubmit={handleSubmit} noValidate autoComplete="off">
-                <FormAluno handleChange={handleChange} inputs={inputs} errors={errors} isNew={false} />
-                <div className="mt-3">
-                    <Link to="/alunos" className="btn btn-secondary me-1">
-                        Cancelar
-                    </Link>
-                    <button type="submit" className="btn btn-primary">
-                        Salvar
-                    </button>
-                </div>
-            </form>
-            <InformModal info="Aluno alterado com sucesso!" action={closeModalAndRedirect} />
+            {!isAdministrador() ? (<Navigate to="/login" />) : (
+                <>
+                    <div className="d-flex justify-content-between align-items-center">
+                        <h1>Alteração de Aluno</h1>
+                    </div>
+                    <hr />
+                    <form onSubmit={handleSubmit} noValidate autoComplete="off">
+                        <FormAluno handleChange={handleChange} inputs={inputs} errors={errors} isNew={false} />
+                        <div className="mt-3">
+                            <Link to="/alunos" className="btn btn-secondary me-1">
+                                Cancelar
+                            </Link>
+                            <button type="submit" className="btn btn-primary">
+                                Salvar
+                            </button>
+                        </div>
+                    </form>
+                    <InformModal info="Aluno alterado com sucesso!" action={closeModalAndRedirect} />
+                </>
+            )}
         </>
     );
 };

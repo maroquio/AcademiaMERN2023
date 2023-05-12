@@ -1,13 +1,13 @@
 import express from "express";
 import { createAluno, updateAluno, deleteAluno, getAluno, getAlunos } from
-    "../controllers/AlunoController.js";
-import { verificarAdmin, verificarUsuario } from "../utils/verificarToken.js";
+    "../controllers/alunoController.js";
+import { verificarAdministrador, verificarAluno, verificarInstrutor } from "../utils/verificarToken.js";
 
 const router = express.Router();
-router.post("/", verificarAdmin, createAluno);
-router.put("/:id", verificarUsuario, updateAluno);
-router.delete("/:id", verificarAdmin, deleteAluno);
-router.get("/:id", verificarUsuario, getAluno);
-router.get("/", verificarAdmin, getAlunos);
+router.post("/", verificarAdministrador, createAluno);
+router.put("/:id", verificarAdministrador, updateAluno);
+router.delete("/:id", verificarAdministrador, deleteAluno);
+router.get("/:id", verificarAluno, getAluno);
+router.get("/", verificarInstrutor, getAlunos);
 
 export default router;

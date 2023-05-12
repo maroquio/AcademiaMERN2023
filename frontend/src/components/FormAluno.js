@@ -38,10 +38,10 @@ const FormAluno = ({ handleChange, inputs, errors, isNew }) => {
                 </div>
                 {isNew && (
                     <>
-                        <div className="col-6 col-md-4">
+                        <div className="col-6 col-md-3">
                             <FormInput type="password" field="senha" placeholder="Senha" label="Senha" onChange={handleChange} value={inputs?.senha} error={errors?.senha} />
                         </div>
-                        <div className="col-6 col-md-4">
+                        <div className="col-6 col-md-3">
                             <FormInput type="password" field="confSenha" placeholder="Confirme sua senha" label="Confirmação de Senha" onChange={handleChange} value={inputs?.confSenha} error={errors?.confSenha} />
                         </div>
                     </>

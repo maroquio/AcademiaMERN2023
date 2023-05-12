@@ -5,7 +5,7 @@ import ConfirmModal from "./ConfirmModal";
 import parse from "html-react-parser";
 import purify from "dompurify";
 import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min.js";
-import { authHeader, isAdministrator } from "../services/authServices";
+import { authHeader, isAdministrador } from "../services/authServices";
 
 const TableInstrutores = ({ instrutores, setInstrutores }) => {
     const [instrutorExcluir, setInstrutorExcluir] = useState(null);
@@ -57,7 +57,7 @@ const TableInstrutores = ({ instrutores, setInstrutores }) => {
                             <td>{instrutor.admin ? "Sim" : "Não"}</td>
                             <td>{instrutor.ativo ? "Ativo" : "Inativo"}</td>
                             <td>
-                                {isAdministrator() ? (
+                                {isAdministrador() ? (
                                     <>
                                         <Link className="btn btn-sm btn-warning me-1" to={`/instrutores/alterar/${instrutor._id}`}>
                                             <i className="bi bi-pen" title="Excluir"></i>

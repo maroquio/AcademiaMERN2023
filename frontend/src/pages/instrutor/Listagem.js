@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Loading from "../../components/Loading";
 import TableInstrutores from "../../components/TableInstrutores";
-import { authHeader, isAdministrator } from "../../services/authServices";
+import { authHeader, isAdministrador } from "../../services/authServices";
 import "./Listagem.css";
 
 const Listagem = () => {
@@ -30,14 +30,16 @@ const Listagem = () => {
         <>
             <div className="d-flex justify-content-between align-items-center">
                 <h1>Instrutores</h1>
-                {isAdministrator() && (
+                {isAdministrador() && (
                     <Link to="/instrutores/cadastrar" className="btn btn-primary">
                         Novo
                     </Link>
                 )}
             </div>
             <hr />
-            {loading ? <Loading /> : <TableInstrutores instrutores={instrutores} setInstrutores={setInstrutores} />}
+            {isAdministrador() ? (
+            loading ? <Loading /> : <TableInstrutores instrutores={instrutores} setInstrutores={setInstrutores} />
+            ) : (<Navigate to="/login" />)}
         </>
     );
 };

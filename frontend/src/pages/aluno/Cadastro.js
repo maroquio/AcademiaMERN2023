@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import axios from "axios";
 import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min.js";
 import FormAluno from "../../components/FormAluno";
 import InformModal from "../../components/InformModal";
-import { authHeader } from "../../services/authServices";
+import { authHeader, isAdministrador } from "../../services/authServices";
 
 const Cadastro = () => {
     const [inputs, setInputs] = useState({});
@@ -90,27 +90,31 @@ const Cadastro = () => {
                     });
                 });
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [inputs]);
 
     return (
         <>
-            <div className="d-flex justify-content-between align-items-center">
-                <h1>Novo Aluno</h1>
-            </div>
-            <hr />
-            <form onSubmit={handleSubmit} noValidate autoComplete="off">
-                <FormAluno handleChange={handleChange} inputs={inputs} errors={errors} isNew={true} />
-                <div className="mt-3">
-                    <Link to="/alunos" className="btn btn-secondary me-1">
-                        Cancelar
-                    </Link>
-                    <button type="submit" className="btn btn-primary">
-                        Salvar
-                    </button>
-                </div>
-            </form>
-            <InformModal info="Aluno cadastrado com sucesso!" action={closeModalAndRedirect} />
+            {!isAdministrador() ? (<Navigate to="/login" />) : (
+                <>
+                    <div className="d-flex justify-content-between align-items-center">
+                        <h1>Novo Aluno</h1>
+                    </div>
+                    <hr />
+                    <form onSubmit={handleSubmit} noValidate autoComplete="off">
+                        <FormAluno handleChange={handleChange} inputs={inputs} errors={errors} isNew={true} />
+                        <div className="mt-3">
+                            <Link to="/alunos" className="btn btn-secondary me-1">
+                                Cancelar
+                            </Link>
+                            <button type="submit" className="btn btn-primary">
+                                Salvar
+                            </button>
+                        </div>
+                    </form>
+                    <InformModal info="Aluno cadastrado com sucesso!" action={closeModalAndRedirect} />
+                </>
+            )}
         </>
     );
 };

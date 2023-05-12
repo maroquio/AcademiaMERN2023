@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import ConfirmModal from "./ConfirmModal";
 import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min.js";
-import { authHeader, isAdministrator } from "../services/authServices";
+import { authHeader, isAdministrador } from "../services/authServices";
 
 const TableAlunos = ({ alunos, setAlunos }) => {
     const [alunoExcluir, setAlunoExcluir] = useState(null);
@@ -31,8 +31,8 @@ const TableAlunos = ({ alunos, setAlunos }) => {
 
     return alunos.length === 0 ? (
         <div className="alert alert-info">Nenhum aluno cadastrado.</div>
-    ) : (
-        <>
+    ) : (        
+        <>        
             <table className="table table-striped">
                 <thead>
                     <tr>
@@ -53,7 +53,7 @@ const TableAlunos = ({ alunos, setAlunos }) => {
                             <td>{aluno.sexo === "M" ? "Masculino" : "Feminino"}</td>
                             <td>{aluno.ativo ? "Ativo" : "Inativo"}</td>
                             <td>
-                                {isAdministrator() ? (
+                                {isAdministrador() ? (
                                     <>
                                         <Link className="btn btn-sm btn-warning me-1" to={`/alunos/alterar/${aluno._id}`}>
                                             <i className="bi bi-pen" title="Excluir"></i>
@@ -72,9 +72,8 @@ const TableAlunos = ({ alunos, setAlunos }) => {
                     ))}
                 </tbody>
             </table>
-
-            <ConfirmModal question={`Deseja realmente excluir o aluno ${alunoExcluir?.nome}?`} action={excluirAluno} />
-        </>
+            <ConfirmModal question={`Deseja realmente excluir o aluno ${alunoExcluir?.nome}?`} action={excluirAluno} />        
+        </>        
     );
 };
 
