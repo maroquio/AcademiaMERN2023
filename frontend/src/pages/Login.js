@@ -52,12 +52,12 @@ const Login = () => {
 
     return (
         <>
-            <div className="container my-5" style={{ minWidth: "480px" }}>
+            <div className="container my-3" style={{ minWidth: "480px" }}>
                 <div className="col-6 col-md-4 col-xl-3 mx-auto">
-                    <p className="text-center" style={{ fontSize: "150px" }}>
+                    <p className="text-center" style={{ fontSize: "120px" }}>
                         🏋
                     </p>
-                    <h1 className="text-center display-3">Academia</h1>
+                    <h1 className="text-center display-4">Academia</h1>
                     <hr />
                     <div className="d-flex justify-content-center align-items-center">
                         <h2>Login</h2>

@@ -7,6 +7,7 @@ import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min.js";
 import FormInstrutor from "../../components/FormInstrutor";
 import InformModal from "../../components/InformModal";
 import { authHeader } from "../../services/authServices";
+import handleChange from "../../utils/handleChange";
 
 const Alteracao = () => {
     const [inputs, setInputs] = useState({});
@@ -37,11 +38,8 @@ const Alteracao = () => {
         ativo: yup.boolean().required("Situação é obrigatória."),
     });
 
-    function handleChange(event) {
-        //rawValue é o valor sem máscara e value é o valor com máscara
-        const value = event.target.rawValue ? event.target.rawValue : event.target.value;
-        const name = event.target.name;
-        setInputs({ ...inputs, [name]: value });
+    function localHandleChange(event) {
+        handleChange(event, inputs, setInputs);
     }
 
     function handleSubmit(event) {
@@ -92,7 +90,7 @@ const Alteracao = () => {
             .catch((error) => {
                 console.log(error);
             });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [idInstrutor]);
 
     useEffect(() => {
@@ -110,7 +108,7 @@ const Alteracao = () => {
                     });
                 });
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [inputs]);
 
     return (
@@ -120,7 +118,7 @@ const Alteracao = () => {
             </div>
             <hr />
             <form onSubmit={handleSubmit} noValidate autoComplete="off">
-                <FormInstrutor handleChange={handleChange} inputs={inputs} errors={errors} isNew={false} />
+                <FormInstrutor handleChange={localHandleChange} inputs={inputs} errors={errors} isNew={false} />
                 <div className="mt-3">
                     <Link to="/instrutores" className="btn btn-secondary me-1">
                         Cancelar

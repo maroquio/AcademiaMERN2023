@@ -1,4 +1,4 @@
-const FormCheckbox = ({ field, onChange, label, value }) => {
+const FormCheckbox = ({ field, onChange, label, value, error }) => {
     return (
         <>
             <div className="form-check form-switch mt-3">
@@ -7,6 +7,7 @@ const FormCheckbox = ({ field, onChange, label, value }) => {
                     {label}
                 </label>
             </div>
+            {error && <p className="m-0 small text-danger">{error}</p>}
         </>
     );
 };

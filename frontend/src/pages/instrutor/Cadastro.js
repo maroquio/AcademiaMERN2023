@@ -7,9 +7,10 @@ import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min.js";
 import FormInstrutor from "../../components/FormInstrutor";
 import InformModal from "../../components/InformModal";
 import { authHeader } from "../../services/authServices";
+import handleChange from "../../utils/handleChange";
 
 const Cadastro = () => {
-    const [inputs, setInputs] = useState({});
+    const [inputs, setInputs] = useState({ "admin": false });
     const [errors, setErrors] = useState({});
     const [modal, setModal] = useState(undefined);
 
@@ -28,21 +29,12 @@ const Cadastro = () => {
             .string()
             .oneOf([yup.ref("senha"), null], "Confirmação de Senha e Senha devem ser iguais.")
             .required("Confirmação de Senha é obrigatória."),
-        admin: yup.boolean().required("Admin é obrigatório."),
-        ativo: yup.boolean().required("Situação é obrigatória."), 
+        admin: yup.boolean().required("Administrador é obrigatório."),
+        ativo: yup.boolean().required("Situação é obrigatória."),
     });
 
-    function handleChange(event) {
-        if (event.target.type === "checkbox") {
-            const value = event.target.checked === true;
-            const name = event.target.name;
-            setInputs({ ...inputs, [name]: value });
-        } else {
-            //rawValue é o valor sem máscara e value é o valor com máscara
-            const value = event.target.rawValue ? event.target.rawValue : event.target.value;
-            const name = event.target.name;
-            setInputs({ ...inputs, [name]: value });
-        }
+    function localHandleChange(event) {
+        handleChange(event, inputs, setInputs);
     }
 
     function handleSubmit(event) {
@@ -107,7 +99,7 @@ const Cadastro = () => {
             </div>
             <hr />
             <form onSubmit={handleSubmit} noValidate autoComplete="off">
-                <FormInstrutor handleChange={handleChange} inputs={inputs} errors={errors} isNew={true} />
+                <FormInstrutor handleChange={localHandleChange} inputs={inputs} errors={errors} isNew={true} />
                 <div className="mt-3">
                     <Link to="/instrutores" className="btn btn-secondary me-1">
                         Cancelar

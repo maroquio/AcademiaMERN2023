@@ -47,10 +47,8 @@ const FormAluno = ({ handleChange, inputs, errors, isNew }) => {
                         </div>
                     </>
                 )}
-                <div className="col-6 col-md-6">
-                    <FormCheckbox field="admin" label="Administrador" onChange={handleChange} value={inputs?.admin} error={errors?.admin} />
-                </div>
-                <div className="col-6 col-md-4">
+
+                <div className="col-6 col-md-3">
                     <FormSelect
                         field="ativo"
                         label="Situação"
@@ -63,6 +61,10 @@ const FormAluno = ({ handleChange, inputs, errors, isNew }) => {
                             { label: "Inativo", value: "false" },
                         ]}
                     />
+                </div>
+
+                <div className="col-6 col-md-3">
+                    <FormCheckbox field="admin" label="Administrador" onChange={handleChange} value={inputs?.admin} error={errors?.admin} />
                 </div>
             </div>
         </>
