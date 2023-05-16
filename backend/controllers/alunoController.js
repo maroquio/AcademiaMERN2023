@@ -26,6 +26,18 @@ export const updateAluno = async (req, res, next) => {
     }
 };
 
+export const updatePerfilAluno = async (req, res, next) => {
+    try {
+        const updatedAluno = await Aluno.findByIdAndUpdate(req.usuario.id, {
+            $set:
+                req.body
+        }, { new: true });
+        res.status(200).json(updatedAluno);
+    } catch (error) {
+        next(error);
+    }
+};
+
 export const deleteAluno = async (req, res, next) => {
     try {
         await Aluno.findByIdAndDelete(req.params.id);

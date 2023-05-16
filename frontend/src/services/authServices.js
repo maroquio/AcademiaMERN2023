@@ -11,7 +11,16 @@ export const login = async (usuario, senha, lembrar) => {
         .then((response) => {
             if (response.status === 200) {
                 if (response.data.accessToken) {
-                    const jsonString = JSON.stringify(response.data);
+                    let usuario = response.data;
+                    const token = jwt(usuario.accessToken);
+                    //Administrador é um tipo de Instrutor com admin=true
+                    if (usuario.tipo === "Instrutor" && token.admin && token.admin === true) {
+                        usuario.perfil = "Administrador"
+                    } else {
+                        usuario.perfil = usuario.tipo; //Instrutor ou Aluno                        
+                    }
+                    console.log("Logado como: ", usuario.perfil);
+                    const jsonString = JSON.stringify(usuario);
                     localStorage.setItem("user", jsonString);
                     logado = true;
                 }

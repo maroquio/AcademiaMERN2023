@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Loading from "../../components/common/Loading";
 import TableInstrutores from "../../components/TableInstrutores";
-import { authHeader, isAdministrador } from "../../services/authServices";
+import { authHeader } from "../../services/authServices";
 import "./Listagem.css";
+import Authorization from "../../components/app/Authorization";
 
 const Listagem = () => {
     const [instrutores, setInstrutores] = useState([]);
@@ -30,16 +31,14 @@ const Listagem = () => {
         <>
             <div className="d-flex justify-content-between align-items-center">
                 <h1>Instrutores</h1>
-                {isAdministrador() && (
+                <Authorization perfil="Administrador">
                     <Link to="/instrutores/cadastrar" className="btn btn-primary">
                         Novo
                     </Link>
-                )}
+                </Authorization>
             </div>
             <hr />
-            {isAdministrador() ? (
-            loading ? <Loading /> : <TableInstrutores instrutores={instrutores} setInstrutores={setInstrutores} />
-            ) : (<Navigate to="/login" />)}
+            {loading ? <Loading /> : <TableInstrutores instrutores={instrutores} setInstrutores={setInstrutores} />}
         </>
     );
 };

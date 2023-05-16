@@ -5,7 +5,7 @@ const FormGrupoMuscular = ({ handleChange, inputs, errors }) => {
         <>
             <div className="row">
                 <div className="col-12 col-md-6">
-                    <FormInput type="text" field="nome" placeholder="Fulano de Tal" label="Nome" onChange={handleChange} value={inputs?.nome} error={errors?.nome} />
+                    <FormInput type="text" field="nome" placeholder="Fulano de Tal" label="Nome" onChange={handleChange} value={inputs?.nome} error={errors?.nome} autofocus={true}/>
                 </div>
             </div>
         </>

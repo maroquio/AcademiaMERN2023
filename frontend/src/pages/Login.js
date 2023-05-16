@@ -38,11 +38,11 @@ const Login = () => {
                 setErrors({});
                 if (await login(inputs.email, inputs.senha, inputs.lembrar)) {
                     if (isAdministrador()) {
-                        navigate("/alunos");
+                        navigate("/");
                     } else if (isInstrutor()) {
                         navigate("/");
                     } else if (isAluno()) {
-                        navigate("/fichas");
+                        navigate("/");
                     }
                 } else {
                     setErrors({ email: "Usuário ou senha inválidos." });

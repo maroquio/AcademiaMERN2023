@@ -1,5 +1,5 @@
 import express from "express";
-import { createAluno, updateAluno, deleteAluno, getAluno, getAlunos } from
+import { createAluno, updateAluno, deleteAluno, getAluno, getAlunos, updatePerfilAluno } from
     "../controllers/alunoController.js";
 import { verificarAdministrador, verificarAluno, verificarInstrutor } from "../utils/security.js";
 

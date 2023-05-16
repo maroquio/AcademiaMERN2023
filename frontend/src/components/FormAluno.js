@@ -7,7 +7,7 @@ const FormAluno = ({ handleChange, inputs, errors, isNew }) => {
         <>
             <div className="row">
                 <div className="col-12 col-md-6">
-                    <FormInput type="text" field="nome" placeholder="Fulano de Tal" label="Nome" onChange={handleChange} value={inputs?.nome} error={errors?.nome} />
+                    <FormInput type="text" field="nome" placeholder="Fulano de Tal" label="Nome" onChange={handleChange} value={inputs?.nome} error={errors?.nome} autofocus={true} />
                 </div>
                 <div className="col-6 col-md-3">
                     <FormInput type="date" field="dataNascimento" placeholder="1900-01-01" label="Data de Nascimento" onChange={handleChange} value={inputs?.dataNascimento?.substring(0, 10)} error={errors?.dataNascimento} />

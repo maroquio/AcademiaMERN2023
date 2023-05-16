@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import axios from "axios";
 import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min.js";
 import FormEntidade from "../../components/FormGrupoMuscular";
 import InformModal from "../../components/common/InformModal";
-import { authHeader, isAdministrador } from "../../services/authServices";
+import { authHeader } from "../../services/authServices";
 import handleChange from "../../utils/handleChange";
+import FormButtons from "../../components/common/FormButtons";
 
 const Cadastro = () => {
     const [inputs, setInputs] = useState({});
@@ -18,7 +19,7 @@ const Cadastro = () => {
 
     //https://github.com/jquense/yup
     const validator = yup.object().shape({
-        nome: yup.string().required("Nome é obrigatório."),        
+        nome: yup.string().required("Nome é obrigatório."),
     });
 
     function localHandleChange(event) {
@@ -82,26 +83,15 @@ const Cadastro = () => {
 
     return (
         <>
-            {!isAdministrador() ? (<Navigate to="/login" />) : (
-                <>
-                    <div className="d-flex justify-content-between align-items-center">
-                        <h1>Novo Grupo Muscular</h1>
-                    </div>
-                    <hr />
-                    <form onSubmit={handleSubmit} noValidate autoComplete="off">
-                        <FormEntidade handleChange={localHandleChange} inputs={inputs} errors={errors} isNew={true} />
-                        <div className="mt-3">
-                            <Link to="/gruposmusculares" className="btn btn-secondary me-1">
-                                Cancelar
-                            </Link>
-                            <button type="submit" className="btn btn-primary">
-                                Salvar
-                            </button>
-                        </div>
-                    </form>
-                    <InformModal info="Grupo muscular cadastrado com sucesso!" action={closeModalAndRedirect} />
-                </>
-            )}
+            <div className="d-flex justify-content-between align-items-center">
+                <h1>Novo Grupo Muscular</h1>
+            </div>
+            <hr />
+            <form onSubmit={handleSubmit} noValidate autoComplete="off">
+                <FormEntidade handleChange={localHandleChange} inputs={inputs} errors={errors} isNew={true} />
+                <FormButtons cancelTarget="/gruposmusculares" />
+            </form>
+            <InformModal info="Grupo muscular cadastrado com sucesso!" action={closeModalAndRedirect} />
         </>
     );
 };

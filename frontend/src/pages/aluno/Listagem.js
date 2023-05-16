@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Loading from "../../components/common/Loading";
 import TableAlunos from "../../components/TableAlunos";
-import { authHeader, isAdministrador, isInstrutor } from "../../services/authServices";
+import { authHeader } from "../../services/authServices";
 import "./Listagem.css";
+import Authorization from "../../components/app/Authorization";
 
 const Listagem = () => {
     const [alunos, setAlunos] = useState([]);
@@ -30,17 +31,14 @@ const Listagem = () => {
         <>
             <div className="d-flex justify-content-between align-items-center">
                 <h1>Alunos</h1>
-                {isAdministrador() && (
+                <Authorization perfil="Administrador">
                     <Link to="/alunos/cadastrar" className="btn btn-primary">
                         Novo
                     </Link>
-                )}
+                </Authorization>
             </div>
             <hr />
-            {(isAdministrador() || isInstrutor()) ? (
-                loading ? <Loading /> : <TableAlunos alunos={alunos} setAlunos={setAlunos} />
-            ) :
-                (<Navigate to="/login" />)}
+            {loading ? <Loading /> : <TableAlunos alunos={alunos} setAlunos={setAlunos} />}
         </>
     );
 };

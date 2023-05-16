@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import { isAdministrador, isInstrutor } from "../../services/authServices";
+import { getUser, isAdministrador, isAuthenticated, isInstrutor } from "../../services/authServices";
 
 const Navbar = () => {
     return (
@@ -33,9 +33,21 @@ const Navbar = () => {
                                     </NavLink>
                                 </>
                             )}
-                            <Link to="/logout" className="nav-link">
-                                Sair
-                            </Link>
+                            {isAuthenticated() && (
+                                <li className="nav-item dropdown">
+                                    <button className="btn btn-link nav-link dropdown-toggle text-light" type="button" data-bs-toggle="dropdown">
+                                        Olá, <b>{getUser().nome}</b>!
+                                    </button>
+                                    <ul className="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                                        <li><Link to="/usuarios/perfil" className="nav-link text-light">Meu Perfil</Link></li>
+                                        <li><Link to="/alunos/fichas" className="nav-link text-light">Minhas Fichas</Link></li>
+                                        <li><Link to="/usuarios/alterarsenha" className="nav-link text-light">Alterar Senha</Link></li>
+                                        <li><hr className="dropdown-divider bg-light" /></li>
+                                        <li><Link to="/usuarios/logout" className="nav-link text-light">Sair</Link></li>
+                                    </ul>
+
+                                </li>
+                            )}
                         </div>
                     </div>
                 </div>

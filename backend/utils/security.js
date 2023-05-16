@@ -22,7 +22,7 @@ export const verificarAutenticado = (req, res, next) => {
         if (!req.usuario) {
             return next(createError(401, "Usuário não autenticado."));
         }
-        if (req.usuario.id === req.params.id || req.usuario.admin) {
+        if (req.usuario.id != null) {
             next();
         }
         else {

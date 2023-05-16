@@ -6,7 +6,7 @@ const FormTipoExercicio = ({ handleChange, inputs, errors }) => {
         <>
             <div className="row">
                 <div className="col-12 col-md-6">
-                    <FormInput type="text" field="nome" placeholder="Fulano de Tal" label="Nome" onChange={handleChange} value={inputs?.nome} error={errors?.nome} />
+                    <FormInput type="text" field="nome" placeholder="Fulano de Tal" label="Nome" onChange={handleChange} value={inputs?.nome} error={errors?.nome} autofocus={true} />
                 </div>
                 <div className="col-12 col-md-6">
                     <CleaveNumberInput type="number" min="0" max="999" step="1" field="pesoMinimo" placeholder="1" label="Peso Mínimo" onChange={handleChange} value={inputs?.nome} error={errors?.nome} options={{ numericOnly: true }} />

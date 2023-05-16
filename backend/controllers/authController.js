@@ -23,3 +23,20 @@ export const login = async (req, res, next) => {
         next(error);
     }
 };
+
+export const alterarSenha = async (req, res, next) => {
+    try {
+        const usuario = await Usuario.findById(req.usuario.id);
+        const senhaValida = await bcrypt.compare(req.body.senhaAtual, usuario.senha);
+        if (!senhaValida) { return next(createError(401, "Senha atual inválida.")); }
+        let salt = await bcrypt.genSalt(10);
+        let hashSenha = await bcrypt.hash(req.body.novaSenha, salt);
+        usuario.senha = hashSenha;
+        const updatedUsuario = await usuario.save();
+        if (!updatedUsuario) { return next(createError(500, "Erro ao alterar a senha.")); }
+        const { senha, ...dados } = updatedUsuario._doc;
+        res.status(200).json(dados);
+    } catch (error) {
+        next(error);
+    }
+}

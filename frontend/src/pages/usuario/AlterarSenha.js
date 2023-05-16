@@ -1,41 +1,30 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import axios from "axios";
 import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min.js";
-import FormAluno from "../../components/FormAluno";
 import InformModal from "../../components/common/InformModal";
 import { authHeader } from "../../services/authServices";
 import handleChange from "../../utils/handleChange";
+import FormAlterarSenha from "../../components/FormAlterarSenha";
 import FormButtons from "../../components/common/FormButtons";
 
-const Alteracao = () => {
+const AlterarSenha = () => {
     const [inputs, setInputs] = useState({});
     const [errors, setErrors] = useState({});
     const [modal, setModal] = useState(undefined);
-    const navigate = useNavigate();
 
-    const idAluno = useParams().id;
-    if (!idAluno) {
-        navigate("/listagem");
-    }
+    const navigate = useNavigate();
 
     //https://github.com/jquense/yup
     const validator = yup.object().shape({
-        nome: yup.string().required("Nome é obrigatório."),
-        dataNascimento: yup.date().required("Data de nascimento é obrigatória."),
-        cpf: yup.string().length(11, "CPF está incompleto.").required("CPF é obrigatório."),
-        sexo: yup.string().oneOf(["M", "F", "O"], "Gênero está incorreto.").required("Gênero é obrigatório."),
-        telefone: yup.string().length(11, "Telefone está incompleto.").required("Telefone é obrigatório."),
-        email: yup.string().email("E-mail inválido.").required("E-mail é obrigatório."),
-        //durante a alteração, senha e confSenha não são obrigatórios
-        // senha: yup.string().min(6, "Senha deve ter pelo menos 6 caracteres.").max(12, "Senha deve ter no máximo 12 caracteres.").required("Senha é obrigatória."),
-        // confSenha: yup
-        //     .string()
-        //     .oneOf([yup.ref("senha"), null], "Confirmação de Senha e Senha devem ser iguais.")
-        //     .required("Confirmação de Senha é obrigatória."),
-        ativo: yup.boolean().required("Situação é obrigatória."),
+        senhaAtual: yup.string().min(6, "Senha atual deve ter pelo menos 6 caracteres.").max(12, "Senha atual deve ter no máximo 12 caracteres.").required("Senha atual é obrigatória."),
+        novaSenha: yup.string().min(6, "Nova senha deve ter pelo menos 6 caracteres.").max(12, "Nova senha deve ter no máximo 12 caracteres.").required("Nova senha é obrigatória."),
+        confNovaSenha: yup
+            .string()
+            .oneOf([yup.ref("novaSenha"), null], "Confirmação de Senha e Nova Senha devem ser iguais.")
+            .required("Confirmação de Senha é obrigatória."),
     });
 
     function localHandleChange(event) {
@@ -49,7 +38,7 @@ const Alteracao = () => {
             .then(() => {
                 setErrors({});
                 axios
-                    .put(`http://localhost:8080/api/alunos/${idAluno}`, inputs, { headers: authHeader() })
+                    .post("http://localhost:8080/api/auth/alterarsenha", inputs, { headers: authHeader() })
                     .then((response) => {
                         if (response.status === 200) {
                             modal.show();
@@ -71,34 +60,19 @@ const Alteracao = () => {
 
     function closeModalAndRedirect() {
         modal.hide();
-        navigate("/alunos");
+        navigate("/");
     }
 
     useEffect(() => {
         const informModal = new bootstrap.Modal("#informModal", {});
         setModal(informModal);
-        setInputs({ ...inputs, id: idAluno });
-        axios
-            .get(`http://localhost:8080/api/alunos/${idAluno}`, { headers: authHeader() })
-            .then((response) => {
-                if (response.status === 200) {
-                    setInputs(response.data);
-                } else {
-                    console.log(response);
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [idAluno]);
+    }, []);
 
     useEffect(() => {
         if (Object.keys(inputs).length > 0) {
             validator
                 .validate(inputs, { abortEarly: false })
                 .then(() => {
-                    //necessário porque quando corrigia o último erro, ele não era eliminado
                     setErrors({});
                 })
                 .catch((error) => {
@@ -114,16 +88,16 @@ const Alteracao = () => {
     return (
         <>
             <div className="d-flex justify-content-between align-items-center">
-                <h1>Alteração de Aluno</h1>
+                <h1>Alteração de Senha</h1>
             </div>
             <hr />
             <form onSubmit={handleSubmit} noValidate autoComplete="off">
-                <FormAluno handleChange={localHandleChange} inputs={inputs} errors={errors} isNew={false} />
-                <FormButtons cancelTarget="/alunos" />
+                <FormAlterarSenha handleChange={localHandleChange} inputs={inputs} errors={errors} />
+                <FormButtons cancelTarget="/" />
             </form>
-            <InformModal info="Aluno alterado com sucesso!" action={closeModalAndRedirect} />
+            <InformModal info="Senha alterada com sucesso!" action={closeModalAndRedirect} />
         </>
     );
 };
 
-export default Alteracao;
+export default AlterarSenha;

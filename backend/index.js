@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import connectDatabase from "./config/db.js";
 import routeAlunos from "./routes/alunoRoutes.js";
 import routeInstrutores from "./routes/instrutorRoutes.js";
+import routeUsuarios from "./routes/usuarioRoutes.js";
 import routeGruposMusculares from "./routes/grupoMuscularRoutes.js";
 import routeTiposExercicios from "./routes/tipoExercicioRoutes.js";
 import routeAuth from "./routes/authRoutes.js";
@@ -21,6 +22,7 @@ app.use(errorHandling);
 app.use("/api/auth", routeAuth);
 app.use("/api/alunos", routeAlunos);
 app.use("/api/instrutores", routeInstrutores);
+app.use("/api/usuarios", routeUsuarios);
 app.use("/api/gruposmusculares", routeGruposMusculares);
 app.use("/api/tiposexercicios", routeTiposExercicios);
 
