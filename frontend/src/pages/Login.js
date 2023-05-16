@@ -1,9 +1,9 @@
 import * as yup from "yup";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import FormInput from "../components/FormInput";
-import FormCheckbox from "../components/FormCheckbox";
-import { login } from "../services/authServices";
+import FormInput from "../components/common/FormInput";
+import FormCheckbox from "../components/common/FormCheckbox";
+import { isAdministrador, isAluno, isInstrutor, login } from "../services/authServices";
 
 const Login = () => {
     const [inputs, setInputs] = useState({ email: "", senha: "", lembrar: false });
@@ -37,7 +37,13 @@ const Login = () => {
             .then(async () => {
                 setErrors({});
                 if (await login(inputs.email, inputs.senha, inputs.lembrar)) {
-                    navigate("/alunos");
+                    if (isAdministrador()) {
+                        navigate("/alunos");
+                    } else if (isInstrutor()) {
+                        navigate("/");
+                    } else if (isAluno()) {
+                        navigate("/fichas");
+                    }
                 } else {
                     setErrors({ email: "Usuário ou senha inválidos." });
                 }

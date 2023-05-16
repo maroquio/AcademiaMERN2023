@@ -1,7 +1,7 @@
 import express from "express";
 import { createAluno, updateAluno, deleteAluno, getAluno, getAlunos } from
     "../controllers/alunoController.js";
-import { verificarAdministrador, verificarAluno, verificarInstrutor } from "../utils/verificarToken.js";
+import { verificarAdministrador, verificarAluno, verificarInstrutor } from "../utils/security.js";
 
 const router = express.Router();
 router.post("/", verificarAdministrador, createAluno);

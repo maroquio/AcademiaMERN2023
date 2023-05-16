@@ -5,7 +5,7 @@ import * as yup from "yup";
 import axios from "axios";
 import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min.js";
 import FormInstrutor from "../../components/FormInstrutor";
-import InformModal from "../../components/InformModal";
+import InformModal from "../../components/common/InformModal";
 import { authHeader, isAdministrador } from "../../services/authServices";
 import handleChange from "../../utils/handleChange";
 

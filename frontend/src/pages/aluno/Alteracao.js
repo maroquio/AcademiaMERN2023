@@ -5,8 +5,9 @@ import * as yup from "yup";
 import axios from "axios";
 import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min.js";
 import FormAluno from "../../components/FormAluno";
-import InformModal from "../../components/InformModal";
-import { authHeader, isAdministrador, isInstrutor } from "../../services/authServices";
+import InformModal from "../../components/common/InformModal";
+import { authHeader, isAdministrador } from "../../services/authServices";
+import handleChange from "../../utils/handleChange";
 
 const Alteracao = () => {
     const [inputs, setInputs] = useState({});
@@ -36,17 +37,8 @@ const Alteracao = () => {
         ativo: yup.boolean().required("Situação é obrigatória."),
     });
 
-    function handleChange(event) {
-        if (event.target.checked) {
-            const value = event.target.checked === true;
-            const name = event.target.name;
-            setInputs({ ...inputs, [name]: value });
-        } else {
-            //rawValue é o valor sem máscara e value é o valor com máscara
-            const value = event.target.rawValue ? event.target.rawValue : event.target.value;
-            const name = event.target.name;
-            setInputs({ ...inputs, [name]: value });
-        }
+    function localHandleChange(event) {
+        handleChange(event, inputs, setInputs);
     }
 
     function handleSubmit(event) {
@@ -127,7 +119,7 @@ const Alteracao = () => {
                     </div>
                     <hr />
                     <form onSubmit={handleSubmit} noValidate autoComplete="off">
-                        <FormAluno handleChange={handleChange} inputs={inputs} errors={errors} isNew={false} />
+                        <FormAluno handleChange={localHandleChange} inputs={inputs} errors={errors} isNew={false} />
                         <div className="mt-3">
                             <Link to="/alunos" className="btn btn-secondary me-1">
                                 Cancelar

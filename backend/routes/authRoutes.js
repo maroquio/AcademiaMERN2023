@@ -1,10 +1,10 @@
 import express from "express";
 import { login } from "../controllers/authController.js";
-import { verificarAdministrador, verificarToken, verificarInstrutor, verificarAluno } from "../utils/verificarToken.js";
+import { verificarAdministrador, verificarToken, verificarInstrutor, verificarAluno } from "../utils/security.js";
 const router = express.Router();
 router.post("/login", login);
 
-router.get("/verificartoken", verificarToken, (req, res) => {
+router.get("/security", verificarToken, (req, res) => {
     res.status(200).json({ message: "Você está autenticado." });
 });
 

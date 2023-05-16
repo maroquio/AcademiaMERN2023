@@ -1,7 +1,7 @@
 import express from "express";
 import { createInstrutor, updateInstrutor, deleteInstrutor, getInstrutor, getInstrutores } from
     "../controllers/instrutorController.js";
-import { verificarAdministrador } from "../utils/verificarToken.js";
+import { verificarAdministrador } from "../utils/security.js";
 
 const router = express.Router();
 router.post("/", verificarAdministrador, createInstrutor);

@@ -2,19 +2,19 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import Loading from "../../components/common/Loading";
-import TableInstrutores from "../../components/TableInstrutores";
-import { authHeader, isAdministrador } from "../../services/authServices";
+import TableGruposMusculares from "../../components/TableGruposMusculares";
+import { authHeader, isAdministrador, isInstrutor } from "../../services/authServices";
 import "./Listagem.css";
 
 const Listagem = () => {
-    const [instrutores, setInstrutores] = useState([]);
+    const [entidades, setEntidades] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const carregarInstrutores = () => {
+    const carregarEntidades = () => {
         axios
-            .get("http://localhost:8080/api/instrutores", { headers: authHeader() })
+            .get("http://localhost:8080/api/gruposmusculares", { headers: authHeader() })
             .then((response) => {
-                setInstrutores(response.data);
+                setEntidades(response.data);
                 setLoading(false);
             })
             .catch((error) => {
@@ -23,23 +23,24 @@ const Listagem = () => {
     };
 
     useEffect(() => {
-        carregarInstrutores();
+        carregarEntidades();
     }, []);
 
     return (
         <>
             <div className="d-flex justify-content-between align-items-center">
-                <h1>Instrutores</h1>
+                <h1>Grupos Musculares</h1>
                 {isAdministrador() && (
-                    <Link to="/instrutores/cadastrar" className="btn btn-primary">
+                    <Link to="/gruposmusculares/cadastrar" className="btn btn-primary">
                         Novo
                     </Link>
                 )}
             </div>
             <hr />
-            {isAdministrador() ? (
-            loading ? <Loading /> : <TableInstrutores instrutores={instrutores} setInstrutores={setInstrutores} />
-            ) : (<Navigate to="/login" />)}
+            {(isAdministrador() || isInstrutor()) ? (
+                loading ? <Loading /> : <TableGruposMusculares entidades={entidades} setEntidades={setEntidades} />
+            ) :
+                (<Navigate to="/login" />)}
         </>
     );
 };

@@ -4,6 +4,8 @@ import Principal from "./pages/Principal";
 import NotFound from "./pages/NotFound";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import Login from "./pages/Login";
+import Logout from "./pages/Logout";
 import Alunos from "./pages/aluno/Listagem";
 import CadastroAluno from "./pages/aluno/Cadastro";
 import AlteracaoAluno from "./pages/aluno/Alteracao";
@@ -12,8 +14,10 @@ import Instrutores from "./pages/instrutor/Listagem";
 import CadastroInstrutor from "./pages/instrutor/Cadastro";
 import AlteracaoInstrutor from "./pages/instrutor/Alteracao";
 import InstrutoresAtivos from "./pages/instrutor/Ativos";
-import Login from "./pages/Login";
-import Logout from "./pages/Logout";
+import GruposMusculares from "./pages/grupoMuscular/Listagem";
+import CadastroGrupoMuscular from "./pages/grupoMuscular/Cadastro";
+import AlteracaoGrupoMuscular from "./pages/grupoMuscular/Alteracao";
+
 
 const App = () => {
     return (
@@ -33,6 +37,11 @@ const App = () => {
                             <Route path="cadastrar" element={<CadastroInstrutor />} />
                             <Route path="alterar/:id" element={<AlteracaoInstrutor />} />
                             <Route path="ativos" element={<InstrutoresAtivos />} />
+                        </Route>
+                        <Route path="gruposmusculares">
+                            <Route index element={<GruposMusculares />} />
+                            <Route path="cadastrar" element={<CadastroGrupoMuscular />} />
+                            <Route path="alterar/:id" element={<AlteracaoGrupoMuscular />} />
                         </Route>
                     </Route>
                     <Route path="/login" element={<Login />} />

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import ConfirmModal from "./ConfirmModal";
+import ConfirmModal from "./common/ConfirmModal";
 import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { authHeader, isAdministrador } from "../services/authServices";
 
