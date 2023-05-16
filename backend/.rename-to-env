@@ -1,0 +1,5 @@
+MONGODB_ATLAS=
+
+MONGODB_LOCAL=mongodb://localhost:27017/academia
+
+JWT_SECRET=bWVtYmVyc2tpbGx0cmFuc3BvcnRhdGlvbnJlY2VudHRpbmRyZXNzcm91dGVmYWxsY2k=
