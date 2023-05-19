@@ -33,19 +33,19 @@ const App = () => {
                             <Route path="logout" element={<Authorization><Logout /></Authorization>} />
                         </Route>
                         <Route path="alunos">
-                            <Route index element={<Authorization perfil="Instrutor"><Alunos /></Authorization>} />
-                            <Route path="cadastrar" element={<Authorization perfil="Administrador"><CadastroAluno /></Authorization>} />
-                            <Route path="alterar/:id" element={<Authorization perfil="Administrador"><AlteracaoAluno /></Authorization>} />
+                            <Route index element={<Authorization perfis={["Instrutor", "Administrador"]}><Alunos /></Authorization>} />
+                            <Route path="cadastrar" element={<Authorization perfis={["Administrador"]}><CadastroAluno /></Authorization>} />
+                            <Route path="alterar/:id" element={<Authorization perfis={["Administrador"]}><AlteracaoAluno /></Authorization>} />
                         </Route>
                         <Route path="instrutores">
-                            <Route index element={<Authorization perfil="Administrador"><Instrutores /></Authorization>} />
-                            <Route path="cadastrar" element={<Authorization perfil="Administrador"><CadastroInstrutor /></Authorization>} />
-                            <Route path="alterar/:id" element={<Authorization perfil="Administrador"><AlteracaoInstrutor /></Authorization>} />
+                            <Route index element={<Authorization perfis={["Administrador"]}><Instrutores /></Authorization>} />
+                            <Route path="cadastrar" element={<Authorization perfis={["Administrador"]}><CadastroInstrutor /></Authorization>} />
+                            <Route path="alterar/:id" element={<Authorization perfis={["Administrador"]}><AlteracaoInstrutor /></Authorization>} />
                         </Route>                        
                         <Route path="gruposmusculares">
-                            <Route index element={<Authorization perfil="Instrutor"><GruposMusculares /></Authorization>} />
-                            <Route path="cadastrar" element={<Authorization perfil="Administrador"><CadastroGrupoMuscular /></Authorization>} />
-                            <Route path="alterar/:id" element={<Authorization perfil="Administrador"><AlteracaoGrupoMuscular /></Authorization>} />
+                            <Route index element={<Authorization perfis={["Instrutor", "Administrador"]}><GruposMusculares /></Authorization>} />
+                            <Route path="cadastrar" element={<Authorization perfis={["Administrador"]}><CadastroGrupoMuscular /></Authorization>} />
+                            <Route path="alterar/:id" element={<Authorization perfis={["Administrador"]}><AlteracaoGrupoMuscular /></Authorization>} />
                         </Route>                        
                     </Route>
                     <Route path="/login" element={<Login />} />                    

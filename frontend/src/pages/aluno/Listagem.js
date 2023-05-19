@@ -31,7 +31,7 @@ const Listagem = () => {
         <>
             <div className="d-flex justify-content-between align-items-center">
                 <h1>Alunos</h1>
-                <Authorization perfil="Administrador">
+                <Authorization perfis={["Administrador"]} redirectToLogin={false}>
                     <Link to="/alunos/cadastrar" className="btn btn-primary">
                         Novo
                     </Link>

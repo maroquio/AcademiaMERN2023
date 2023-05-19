@@ -18,8 +18,7 @@ export const login = async (usuario, senha, lembrar) => {
                         usuario.perfil = "Administrador"
                     } else {
                         usuario.perfil = usuario.tipo; //Instrutor ou Aluno                        
-                    }
-                    console.log("Logado como: ", usuario.perfil);
+                    }                    
                     const jsonString = JSON.stringify(usuario);
                     localStorage.setItem("user", jsonString);
                     logado = true;
@@ -75,7 +74,7 @@ export const isAdministrador = () => {
     const user = getUser();
     if (user && user.accessToken) {
         const decoded = jwt(user.accessToken);
-        return (decoded.admin && (decoded.admin === true) && (decoded.perfil === "Instrutor"));
+        return ((decoded.perfil === "Instrutor") && decoded.admin && (decoded.admin === true) );
     } else {
         return false;
     }

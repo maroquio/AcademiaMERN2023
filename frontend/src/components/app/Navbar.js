@@ -1,5 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
-import { getUser, isAdministrador, isAuthenticated, isInstrutor } from "../../services/authServices";
+import { getUser } from "../../services/authServices";
+import Authorization from "./Authorization";
 
 const Navbar = () => {
     return (
@@ -18,12 +19,12 @@ const Navbar = () => {
                             <NavLink to="/" className="nav-link">
                                 Principal
                             </NavLink>
-                            {(isAdministrador() || isInstrutor()) && (
+                            <Authorization perfis={["Administrador", "Instrutor"]} redirectToLogin={false}>
                                 <NavLink to="/alunos" className="nav-link">
                                     Alunos
                                 </NavLink>
-                            )}
-                            {isAdministrador() && (
+                            </Authorization>
+                            <Authorization perfis={["Administrador", "Instrutor"]} redirectToLogin={false}>
                                 <>
                                     <NavLink to="/instrutores" className="nav-link">
                                         Instrutores
@@ -32,8 +33,8 @@ const Navbar = () => {
                                         Grupos Musculares
                                     </NavLink>
                                 </>
-                            )}
-                            {isAuthenticated() && (
+                            </Authorization>
+                            <Authorization redirectToLogin={false}>
                                 <li className="nav-item dropdown">
                                     <button className="btn btn-link nav-link dropdown-toggle text-light" type="button" data-bs-toggle="dropdown">
                                         Olá, <b>{getUser().nome}</b>!
@@ -45,9 +46,8 @@ const Navbar = () => {
                                         <li><hr className="dropdown-divider bg-light" /></li>
                                         <li><Link to="/usuarios/logout" className="nav-link text-light">Sair</Link></li>
                                     </ul>
-
                                 </li>
-                            )}
+                            </Authorization>
                         </div>
                     </div>
                 </div>
